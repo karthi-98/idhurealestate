@@ -995,7 +995,7 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="bg-red-900/20 border-2 border-red-500/50 p-6 rounded-xl mb-8">
+            <div className="bg-yellow-500/10 border-2 border-blue-500/50 p-6 rounded-xl mb-8">
               <p className="text-lg font-body text-foreground font-semibold">
                 ⚡ Only 10 clients/month. Don't miss your city slot.
               </p>
