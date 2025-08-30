@@ -1,26 +1,275 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-dark: #e5e5e5;
+  --secondary: #1a1a1a;
+  --accent: #ef4444;
+  --accent-dark: #dc2626;
+  --muted: #888888;
+  --border: #333333;
+  --video-border: #666666;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-video-border: var(--video-border);
+  --font-inter: var(--font-inter);
+  --font-merriweather: var(--font-merriweather);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-merriweather), serif;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.font-heading {
+  font-family: var(--font-merriweather), serif;
+  color: #ffffff;
+}
+
+.font-body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.5px;
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Animation Enhancement Styles */
+.animate-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.animate-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.animate-button:hover::before {
+  left: 100%;
+}
+
+.stat-card {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  cursor: pointer !important;
+}
+
+.process-step {
+  transition: all 0.3s ease;
+}
+
+.process-step:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.faq-item {
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: var(--accent);
+}
+
+.video-holder {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+.video-holder:hover {
+  transform: scale(1.02);
+  cursor: pointer !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Universal cursor pointer for all hover elements */
+.hero-title, .hero-subtitle, .hero-description,
+h1.font-heading, h2.font-heading, h3.font-heading, h4.font-heading, h5.font-heading, h6.font-heading,
+.stat-card, .process-step, .value-card, .faq-item, .video-holder,
+.problem-card {
+  cursor: pointer !important;
+}
+
+.hero-title:hover, .hero-subtitle:hover, .hero-description:hover,
+h1.font-heading:hover, h2.font-heading:hover, h3.font-heading:hover, h4.font-heading:hover, h5.font-heading:hover, h6.font-heading:hover,
+.stat-card:hover, .process-step:hover, .value-card:hover, .faq-item:hover, .video-holder:hover,
+.problem-card:hover {
+  cursor: pointer !important;
+}
+
+/* Text hover animations with cursor pointer */
+.hero-title {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+.hero-title:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+  cursor: pointer !important;
+}
+
+.hero-subtitle {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+.hero-subtitle:hover {
+  transform: translateY(-1px);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer !important;
+}
+
+.hero-description {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+.hero-description:hover {
+  transform: translateY(-1px);
+  cursor: pointer !important;
+}
+
+h2.font-heading {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+h2.font-heading:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer !important;
+}
+
+h3.font-heading {
+  transition: all 0.3s ease;
+  cursor: pointer !important;
+}
+
+h3.font-heading:hover {
+  transform: translateY(-1px);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer !important;
+}
+
+/* FAQ item hover enhancement */
+.faq-item {
+  cursor: pointer !important;
+}
+
+.faq-item h3 {
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  cursor: pointer !important;
+}
+
+.faq-item:hover h3 {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* Process step text hover */
+.process-step {
+  cursor: pointer !important;
+}
+
+.process-step h3 {
+  transition: all 0.3s ease;
+}
+
+.process-step:hover {
+  cursor: pointer !important;
+}
+
+.process-step:hover h3 {
+  color: var(--accent);
+}
+
+/* Value card text hover */
+.value-card {
+  cursor: pointer !important;
+}
+
+.value-card h3 {
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  cursor: pointer !important;
+}
+
+.value-card:hover h3 {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+/* Generic text hover for paragraphs in cards */
+.stat-card p, .process-step p, .value-card p, .faq-item p {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover p, .process-step:hover p, .value-card:hover p, .faq-item:hover p {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Animation enhancements - no initial hiding, GSAP will handle it */
+
+/* Ensure problem cards are always visible */
+.problem-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
