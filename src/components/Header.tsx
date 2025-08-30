@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface HeaderProps {
   className?: string;
@@ -9,6 +10,7 @@ interface HeaderProps {
 export default function Header({ className }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const menuItems = [
     { name: 'Home', href: '#' },
@@ -60,17 +62,24 @@ export default function Header({ className }: HeaderProps) {
       <div className={`transition-all duration-300 ease-in-out ${
         isScrollingDown && isScrolled ? 'mx-2 sm:mx-4 md:mx-12 lg:mx-24 xl:mx-32 mt-2' : 'mx-2 sm:mx-4 mt-2 sm:mt-4'
       }`}>
-        <nav className={`backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-lg transition-all duration-300 ease-in-out ${
+        <nav className={`backdrop-blur-md ${theme === 'light' ? 'bg-white/80 border-2 border-gray-200/60' : 'bg-white/10 border-2 border-white/15'} rounded-2xl shadow-lg transition-all duration-300 ease-in-out ${
           isScrollingDown && isScrolled ? 'px-3 sm:px-4 py-2' : 'px-4 sm:px-6 py-3 sm:py-4'
         }`}>
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <h1 className={`font-heading font-bold text-white transition-all duration-300 ${
-                isScrollingDown && isScrolled ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'
-              }`}>
-                Idhu<span className="text-accent">RealEstate</span>
-              </h1>
+              <a href="#" className="flex items-center">
+                <img
+                  src="/logo.png"
+                  alt="Idhu Real Estate Logo"
+                  className={`h-8 sm:h-10 transition-all duration-300 ${isScrollingDown && isScrolled ? 'h-7 sm:h-8' : 'h-8 sm:h-10'}`}
+                />
+                {/* <span className={`ml-2 font-heading font-bold text-white transition-all duration-300 ${
+                  isScrollingDown && isScrolled ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'
+                }`}>
+                  Idhu<span className="text-accent">RealEstate</span>
+                </span> */}
+              </a>
             </div>
 
             {/* Desktop Menu */}
@@ -81,15 +90,33 @@ export default function Header({ className }: HeaderProps) {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
-                  className="font-body text-sm font-medium text-white/90 hover:text-accent transition-all duration-300 hover:scale-110 transform hover:cursor-pointer"
+                  className={`font-body text-sm font-medium ${theme === 'light' ? 'text-gray-700 hover:text-accent' : 'text-white/90 hover:text-accent'} transition-all duration-300 hover:scale-110 transform hover:cursor-pointer`}
                 >
                   {item.name}
                 </button>
               ))}
             </div>
 
-            {/* CTA Button */}
+            {/* Theme Switcher & CTA Button */}
             <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                className={`p-2 rounded-lg transition-all duration-300 ${theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-white/10'} ${
+                  isScrollingDown && isScrolled ? 'p-1.5' : 'p-2'
+                }`}
+                aria-label="Toggle theme"
+              >
+                {theme === 'light' ? (
+                  <svg className={`w-5 h-5 text-gray-700 hover:text-accent`} fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg className={`w-5 h-5 text-white/90 hover:text-accent`} fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                  </svg>
+                )}
+              </button>
               <button className={`bg-accent hover:bg-accent-dark text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 hover:cursor-pointer ${
                 isScrollingDown && isScrolled ? 'px-3 py-2 text-xs' : 'px-4 py-2.5 sm:px-6 sm:py-3 text-sm'
               }`}>
@@ -101,7 +128,7 @@ export default function Header({ className }: HeaderProps) {
               
               {/* Mobile Menu Button */}
               <button 
-                className="md:hidden text-white/90 hover:text-white transition-colors duration-300"
+                className={`md:hidden ${theme === 'light' ? 'text-gray-700 hover:text-gray-900' : 'text-white/90 hover:text-white'} transition-colors duration-300`}
                 onClick={() => {
                   const mobileMenu = document.getElementById('mobile-menu');
                   if (mobileMenu) {
@@ -117,7 +144,7 @@ export default function Header({ className }: HeaderProps) {
           </div>
 
           {/* Mobile Menu */}
-          <div id="mobile-menu" className="hidden md:hidden mt-4 pt-4 border-t border-white/20">
+          <div id="mobile-menu" className={`hidden md:hidden mt-4 pt-4 ${theme === 'light' ? 'border-t border-gray-200/50' : 'border-t border-white/20'}`}>
             <div className="flex flex-col space-y-3">
               {menuItems.map((item) => (
                 <button
@@ -126,7 +153,7 @@ export default function Header({ className }: HeaderProps) {
                     scrollToSection(item.href);
                     document.getElementById('mobile-menu')?.classList.add('hidden');
                   }}
-                  className="font-body text-sm font-medium text-left text-white/90 hover:text-accent transition-all duration-300 hover:translate-x-2 transform"
+                  className={`font-body text-sm font-medium text-left ${theme === 'light' ? 'text-gray-700 hover:text-accent' : 'text-white/90 hover:text-accent'} transition-all duration-300 hover:translate-x-2 transform`}
                 >
                   {item.name}
                 </button>
